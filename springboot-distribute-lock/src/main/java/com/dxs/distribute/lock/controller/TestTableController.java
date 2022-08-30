@@ -1,6 +1,7 @@
 package com.dxs.distribute.lock.controller;
 
 import com.dxs.distribute.lock.aop.annotation.RedisLock;
+import com.dxs.distribute.lock.aop.annotation.RedisNxLock;
 import com.dxs.distribute.lock.model.request.AddTestTableReq;
 import com.dxs.distribute.lock.service.TestTableService;
 import com.dxs.distribute.lock.utils.SysResult;
@@ -19,6 +20,12 @@ public class TestTableController {
     @RedisLock
     @PostMapping("/add")
     public SysResult<Object> add(@RequestBody AddTestTableReq addTestTableReq) {
+        return testTableService.add(addTestTableReq);
+    }
+
+    @RedisNxLock
+    @PostMapping("/add2")
+    public SysResult<Object> add2(@RequestBody AddTestTableReq addTestTableReq) {
         return testTableService.add(addTestTableReq);
     }
 }
