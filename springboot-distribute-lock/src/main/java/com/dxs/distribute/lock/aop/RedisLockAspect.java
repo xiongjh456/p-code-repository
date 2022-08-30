@@ -1,18 +1,21 @@
 package com.dxs.distribute.lock.aop;
 
-import com.dxs.distribute.lock.aop.annotation.RedisLock;
+import com.dxs.distribute.lock.constants.SystemErrorMsgConstant;
+import com.dxs.distribute.lock.utils.SysResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.redis.util.RedisLockRegistry;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.lang.reflect.Method;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -22,37 +25,22 @@ public class RedisLockAspect {
     @Autowired
     private RedisLockRegistry redisLockRegistry;
 
-    @Pointcut("execution(* com.gov.controller..*.*(..)) || execution(* com.gov.enterprise.controller..*.*(..))")
-    public void power() {
+    @Pointcut("execution(* com.dxs.distribute..*.*(..)) || execution(* com.dxs.distribute.lock.controller.*.*(..))")
+    public void power() { }
 
-    }
-
-    @Around("power() && @annotation(com.gov.enterprise.aop.annotation.RedisLock)")
+    @Around("power() && @annotation(com.dxs.distribute.lock.aop.annotation.RedisLock)")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws InterruptedException {
-        Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
-        RedisLock redisLock = method.getAnnotation(RedisLock.class);
-        String key = redisLock.value();
-        if (StringUtils.isEmpty(key)) {
-            Object[] args = proceedingJoinPoint.getArgs();
-            key = Arrays.toString(args);
+        Object[] args = proceedingJoinPoint.getArgs();
+        String key = Arrays.toString(args);
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (Objects.isNull(servletRequestAttributes)) {
+            return SysResult.fail(SystemErrorMsgConstant.FAILURE_ERROR);
         }
-
-//        boolean result = redisDistributedLock.lock(key, redisLock.expireMills(), redisLock.retryTimes(), redisLock.retryDurationMills());
-//        if (!result) {
-//            log.info("--------------------------redis lock failed, key: [{}]", key);
-//            return null;
-//        }
-//
-//        log.info("------------------------redis lock success, key: [{}]", key);
-//        try{
-//            proceedingJoinPoint.proceed();
-//        } catch (Throwable throwable) {
-//            log.error("executed occurred an exception", throwable);
-//        } finally {
-//            boolean successFlag = redisDistributedLock.unlock(key);
-//            log.info("---------------redis release lock, key: [{}], successFlag: [{}]", key, successFlag);
-//        }
-//        return null;
+        HttpServletRequest httpServletRequest = servletRequestAttributes.getRequest();
+        String token = httpServletRequest.getHeader("token");
+        if (StringUtils.hasLength(token)) {
+            key += token;
+        }
 
         Lock lock = redisLockRegistry.obtain(key);
         try {
@@ -63,10 +51,10 @@ public class RedisLockAspect {
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {
-//            TimeUnit.SECONDS.sleep(1);
+            Thread.sleep(200);
             // 释放分布式锁
             lock.unlock();
         }
-        return null;
+        return SysResult.fail();
     }
 }
