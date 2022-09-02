@@ -1,4 +1,4 @@
-package com.dxs.distribute.lock.model.request;
+package com.dxs.model.request;
 
 import java.io.Serializable;
 

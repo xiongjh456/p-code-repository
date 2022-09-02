@@ -1,7 +1,7 @@
 package com.dxs.distribute.lock.service;
 
-import com.dxs.distribute.lock.model.request.AddTestTableReq;
 import com.dxs.distribute.lock.utils.SysResult;
+import com.dxs.model.request.AddTestTableReq;
 
 /**
   * 项目保险service

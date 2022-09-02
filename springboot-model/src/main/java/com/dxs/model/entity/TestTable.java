@@ -1,4 +1,4 @@
-package com.dxs.distribute.lock.model.entity;
+package com.dxs.model.entity;
 
 import java.util.Date;
 

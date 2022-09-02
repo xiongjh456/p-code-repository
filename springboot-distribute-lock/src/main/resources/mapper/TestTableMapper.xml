@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dxs.distribute.lock.mapper.TestTableMapper" >
-  <resultMap id="BaseResultMap" type="com.dxs.distribute.lock.model.entity.TestTable" >
+  <resultMap id="BaseResultMap" type="com.dxs.model.entity.TestTable" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
@@ -23,7 +23,7 @@
     delete from test_table
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.dxs.distribute.lock.model.entity.TestTable" >
+  <insert id="insert" parameterType="com.dxs.model.entity.TestTable" >
     insert into test_table (id, create_time, modify_time, 
       del_flag, create_id, modify_id, 
       remark)
@@ -31,7 +31,7 @@
       #{delFlag,jdbcType=BIT}, #{createId,jdbcType=INTEGER}, #{modifyId,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dxs.distribute.lock.model.entity.TestTable" >
+  <insert id="insertSelective" parameterType="com.dxs.model.entity.TestTable" >
     insert into test_table
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dxs.distribute.lock.model.entity.TestTable" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.dxs.model.entity.TestTable" >
     update test_table
     <set >
       <if test="createTime != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dxs.distribute.lock.model.entity.TestTable" >
+  <update id="updateByPrimaryKey" parameterType="com.dxs.model.entity.TestTable" >
     update test_table
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP},

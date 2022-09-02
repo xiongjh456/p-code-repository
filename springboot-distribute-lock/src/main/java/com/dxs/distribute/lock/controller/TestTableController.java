@@ -2,9 +2,9 @@ package com.dxs.distribute.lock.controller;
 
 import com.dxs.distribute.lock.aop.annotation.RedisLock;
 import com.dxs.distribute.lock.aop.annotation.RedisNxLock;
-import com.dxs.distribute.lock.model.request.AddTestTableReq;
 import com.dxs.distribute.lock.service.TestTableService;
 import com.dxs.distribute.lock.utils.SysResult;
+import com.dxs.model.request.AddTestTableReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

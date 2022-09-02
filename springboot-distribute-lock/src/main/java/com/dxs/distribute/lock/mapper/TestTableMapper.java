@@ -1,6 +1,7 @@
 package com.dxs.distribute.lock.mapper;
 
-import com.dxs.distribute.lock.model.entity.TestTable;
+
+import com.dxs.model.entity.TestTable;
 
 public interface TestTableMapper {
     int deleteByPrimaryKey(Integer id);
