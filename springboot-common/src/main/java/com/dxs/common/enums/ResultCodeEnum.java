@@ -1,4 +1,4 @@
-package com.dxs.distribute.lock.enums;
+package com.dxs.common.enums;
 
 /**
  * 响应码枚举

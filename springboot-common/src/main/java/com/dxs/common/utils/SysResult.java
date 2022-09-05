@@ -1,6 +1,6 @@
-package com.dxs.distribute.lock.utils;
+package com.dxs.common.utils;
 
-import com.dxs.distribute.lock.enums.ResultCodeEnum;
+import com.dxs.common.enums.ResultCodeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

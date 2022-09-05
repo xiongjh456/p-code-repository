@@ -1,10 +1,10 @@
 package com.dxs.distribute.lock.service.impl;
 
+import com.dxs.common.utils.SysResult;
 import com.dxs.distribute.lock.constants.SystemErrorMsgConstant;
 import com.dxs.distribute.lock.mapper.TestTableMapper;
 import com.dxs.distribute.lock.service.TestTableService;
 import com.dxs.distribute.lock.utils.DateUtil;
-import com.dxs.distribute.lock.utils.SysResult;
 import com.dxs.model.entity.TestTable;
 import com.dxs.model.request.AddTestTableReq;
 import org.springframework.beans.BeanUtils;

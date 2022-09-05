@@ -1,6 +1,6 @@
 package com.dxs.distribute.lock.service;
 
-import com.dxs.distribute.lock.utils.SysResult;
+import com.dxs.common.utils.SysResult;
 import com.dxs.model.request.AddTestTableReq;
 
 /**
